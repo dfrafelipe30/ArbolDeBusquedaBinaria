@@ -16,7 +16,9 @@ template <typename TipoDato>
 bool ArbolBusquedaBinaria<TipoDato>::buscar(TipoDato dato){
 	return buscarNodo(raiz, dato) != NULL;
 }
-
+/*
+ * Porque toca pasar por referencia el objeto en la lista.
+ */
 
 template <typename TipoDato>
 typename ArbolBusquedaBinaria<TipoDato>::NodoABB * ArbolBusquedaBinaria<TipoDato>::buscarNodo(ArbolBusquedaBinaria<TipoDato>::NodoABB*nodo, TipoDato dato) {
