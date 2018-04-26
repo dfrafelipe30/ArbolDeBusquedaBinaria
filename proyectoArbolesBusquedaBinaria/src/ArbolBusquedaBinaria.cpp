@@ -16,9 +16,21 @@ template <typename TipoDato>
 bool ArbolBusquedaBinaria<TipoDato>::buscar(TipoDato dato){
 	return buscarNodo(raiz, dato) != NULL;
 }
-/*
- * Porque toca pasar por referencia el objeto en la lista.
- */
+template <typename TipoDato>
+ArbolBusquedaBinaria<TipoDato> :: ~ArbolBusquedaBinaria()
+{
+	eliminarDato(raiz);
+}
+template <typename TipoDato>
+void ArbolBusquedaBinaria<TipoDato>::eliminarDato(ArbolBusquedaBinaria <TipoDato>::NodoABB *nodo)
+{
+	if(nodo != NULL)
+	{
+		eliminarDato(nodo -> izq);
+		eliminarDato(nodo -> der);
+		delete nodo;
+	}
+}
 
 template <typename TipoDato>
 typename ArbolBusquedaBinaria<TipoDato>::NodoABB * ArbolBusquedaBinaria<TipoDato>::buscarNodo(ArbolBusquedaBinaria<TipoDato>::NodoABB*nodo, TipoDato dato) {
@@ -42,22 +54,21 @@ void ArbolBusquedaBinaria<TipoDato>::insertarNodo(ArbolBusquedaBinaria<TipoDato>
 	if (nodo == NULL) {
 		nodo = new NodoABB;
 		nodo->dato = dato;
-		nodo->izq = nodo->der = NULL;
+		nodo->izq = nodo->der =   NULL;
+		nodo->padre = raiz;
 	} else {
 		if (dato != nodo->dato) {
 			if (dato < nodo->dato) {
+				raiz = nodo;
 				insertarNodo(nodo->izq, dato);
-			} else {
+			} else { 
+				raiz = nodo;
 				insertarNodo(nodo->der, dato);
 			}
 		}
 	}
 
 }
-
-
-
-
 
 template <typename TipoDato>
 void ArbolBusquedaBinaria<TipoDato>::imprimir(){
@@ -72,5 +83,83 @@ void ArbolBusquedaBinaria<TipoDato>::imprimirArbol(ArbolBusquedaBinaria<TipoDato
 		imprimirArbol(nodo->der);
 	}
 }
+template <typename TipoDato>
+void ArbolBusquedaBinaria<TipoDato>::imprimirPreOrden(){
+	imprimirPre(raiz);
+}
+template <typename TipoDato>
+void ArbolBusquedaBinaria<TipoDato>::imprimirPre(ArbolBusquedaBinaria<TipoDato>::NodoABB *nodo){
+	if (nodo != NULL) {
+		std::cout << nodo->dato << std::endl;
+		imprimirArbol(nodo->izq);
+		imprimirArbol(nodo->der);
+	}
+}
+template <typename TipoDato>
+void ArbolBusquedaBinaria<TipoDato>::imprimirPostOrden(){
+	imprimirPost(raiz);
+}
+template <typename TipoDato>
+void ArbolBusquedaBinaria<TipoDato>::imprimirPost(ArbolBusquedaBinaria<TipoDato>::NodoABB *nodo){
+	if (nodo != NULL) {
+		imprimirArbol(nodo->izq);
+		imprimirArbol(nodo->der);
+		std::cout << nodo->dato << std::endl;
+	}
+}
+template <typename TipoDato>
+TipoDato ArbolBusquedaBinaria <TipoDato>::minimo()
+{
+	minimoRec(raiz);
+}
+template <typename TipoDato>
+TipoDato ArbolBusquedaBinaria <TipoDato>::minimoRe(ArbolBusquedaBinaria<TipoDato>::NodoABB *nodo)
+{
+	if(nodo -> izq  == NULL and nodo != NULL)
+	{
+		return  nodo -> dato;
+	}
+	else{
+		minimoRe(nodo -> izq);
+	}
+}
+template <typename TipoDato>
+TipoDato ArbolBusquedaBinaria <TipoDato>::maximo()
+{
+	maximoRe(raiz);
+}
+template <typename TipoDato>
+TipoDato ArbolBusquedaBinaria <TipoDato>::maximoRe(ArbolBusquedaBinaria<TipoDato>::NodoABB *nodo)
+{
+	if(nodo-> der  == NULL and nodo != NULL)
+	{
+		return nodo -> dato;
+	}
+	else{
+		maximoRe(nodo -> der);
+	}
+}
+template <typename TipoDato>
+TipoDato ArbolBusquedaBinaria <TipoDato>::predecesor(TipoDato dato)
+{
+	NodoABB * nuevaRaiz = buscarNodo(raiz,dato);
+	return predecesorRe(nuevaRaiz,dato);
+}
+template <typename TipoDato>
+TipoDato ArbolBusquedaBinaria <TipoDato>::predecesorRe(ArbolBusquedaBinaria<TipoDato>::NodoABB *nodo,TipoDato dato)
+{
+	if(nodo -> dato == minimoRe(raiz))
+		return nodo -> dato;
+	else if(nodo ->izq == NULL)
+	{
+		return nodo-> padre;
+	}
+	if(nodo -> izq != NULL )
+	{
+		maximoRe(nodo -> izq);
+	}
 
+
+}
 #endif
+
