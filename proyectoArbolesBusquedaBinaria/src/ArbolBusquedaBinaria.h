@@ -12,15 +12,16 @@ template <typename TipoDato>
 class ArbolBusquedaBinaria {
 public:
 	/*
-	* Tipo: Nodo de Árbol de Búsqueda Binaria
+	* Tipo: Nodo de ï¿½rbol de Bï¿½squeda Binaria
 	* ----------
-	* Estructura para almacenar cada nodo del árbol.
+	* Estructura para almacenar cada nodo del ï¿½rbol.
 	*/
 
 	struct NodoABB {
 		TipoDato dato;
 		NodoABB *izq;
 		NodoABB *der;
+		NodoABB *padre;
 	};
 
 	//Constructores
@@ -28,23 +29,27 @@ public:
 
 	ArbolBusquedaBinaria(TipoDato datoIni);
 
-	//~ArbolBusquedaBinaria();
+	~ArbolBusquedaBinaria();
 
-	//Métodos públicos
+	void eliminarDato(NodoABB *nodo);
+
+	//Mï¿½todos pï¿½blicos
 	bool buscar(TipoDato dato);
 
 	NodoABB* buscarNodo(NodoABB* nodo, TipoDato dato);
 
-	/*
+
 	TipoDato minimo();
 
 	TipoDato maximo();
 
-	TipoDato predecesor();
+	TipoDato predecesor(TipoDato dato);
 
-	TipoDato sucesor();
-	 */
+	TipoDato sucesor(TipoDato dato );
 
+	TipoDato minimoRe(NodoABB * nodo);
+	TipoDato maximoRe(NodoABB * nodo);
+	TipoDato predecesorRe(NodoABB * nodo,TipoDato dato);
 
 	void insertar(TipoDato dato);
 
@@ -56,17 +61,18 @@ public:
 
 	void imprimirArbol(NodoABB * nodo);
 
-	/*
+	void imprimirPre(NodoABB * nodo);
 
 	void imprimirPreOrden();
 
 	void imprimirPostOrden();
 
-	*/
+	void imprimirPost(NodoABB * nodo);
+
 
 private:
 	/* Atributos */
-	NodoABB *raiz; 	/* Apuntador al nodo raíz del árbol */
+	NodoABB *raiz; 	/* Apuntador al nodo raï¿½z del ï¿½rbol */
 };
 
 
